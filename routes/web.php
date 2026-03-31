@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TuristicPlaceController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,5 +16,36 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//crear sitio ecoturistico
+Route::get('/Crear_sitio', [TuristicPlaceController::class, 'crear'])
+                            //con esto le pongo un nombre a la ruta para no tener
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('crear_sitio');
+
+Route::post('/Crear_sitio', [TuristicPlaceController::class, 'validarsitio'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('guardar_sitio');
+
+//gestion y eliminar  sitios de operador y admin
+Route::get('/Gestion_sitio', [TuristicPlaceController::class, 'gestionsitios'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('gestionar_sitios');
+Route::delete('/Gestion_sitio/{id}', [TuristicPlaceController::class, 'destroy'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('eliminar_sitio');
+Route::patch('/Gestion_sitio/{id}/opening_status', [TuristicPlaceController::class, 'toggleOpeningStatus'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('toggle_opening_status');
+//editar sitios de oprador y admin
+Route::get('/Editar_sitio/{id}', [TuristicPlaceController::class, 'editar'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('Modificar_sitio');
+Route::put('/Editar_sitio/{id}', [TuristicPlaceController::class, 'sitioactualizado'])
+    ->middleware(['auth', 'role:operator,admin'])
+    ->name('sitio_actualizado');
+
+//visualizar sitio ecoturistico
+Route::get('/Sitio/{id}', [TuristicPlaceController::class, 'ver'])->name('sitio_ecoturistico');
 
 require __DIR__.'/auth.php';
