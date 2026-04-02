@@ -50,6 +50,4 @@ class TuristicPlace extends Model
     }
 
 
-
-    
-}
+    }

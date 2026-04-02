@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\preferenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TuristicPlaceController;
 Route::get('/', function () {
@@ -16,6 +17,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//preferences routes
+
+
+Route::get('/preferencias', [preferenceController::class, 'mostrardatosdepreferencias'])
+    ->middleware(['auth', 'verified'])
+    ->name('preferencias');
+Route::post('/preferencias', [preferenceController::class, 'validarpreferencias'])
+    ->middleware(['auth', 'verified'])
+    ->name('preferencias');
 
 //crear sitio ecoturistico
 Route::get('/Crear_sitio', [TuristicPlaceController::class, 'crear'])
