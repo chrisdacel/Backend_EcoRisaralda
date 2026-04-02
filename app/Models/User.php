@@ -53,4 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+     public function preferences()
+    {
+        return $this->belongsToMany(preference::class)
+            ->wherePivotNull('archived_at');
+    }
 }
