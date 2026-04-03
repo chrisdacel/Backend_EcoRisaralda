@@ -94,3 +94,6 @@ Route::get('/preferences', function () {
                 'first_time' => $request->user()->first_time_preferences
             ]);
         });
+
+        // Gestión de sitios turísticos (todos los sitios)
+            Route::get('/places', [TuristicPlaceApiController::class, 'index']);

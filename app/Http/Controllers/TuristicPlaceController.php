@@ -312,6 +312,9 @@ class TuristicPlaceController extends Controller
         return view('sitios_ecoturisticos.Sitios_favoritos', compact('favoritePlaces'));
     }
 
+  
+  
+  
     public function coleccion(Request $request)
 {
     $search = $request->input('search');
