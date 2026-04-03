@@ -59,4 +59,9 @@ Route::put('/Editar_sitio/{id}', [TuristicPlaceController::class, 'sitioactualiz
 //visualizar sitio ecoturistico
 Route::get('/Sitio/{id}', [TuristicPlaceController::class, 'ver'])->name('sitio_ecoturistico');
 
+
+//ver coleccion de todos los sitios 
+Route::get('/Coleccion', [TuristicPlaceController::class, 'coleccion'])
+    ->name('coleccion_sitios');
+
 require __DIR__.'/auth.php';
