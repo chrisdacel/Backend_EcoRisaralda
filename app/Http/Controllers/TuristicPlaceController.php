@@ -25,8 +25,11 @@ class TuristicPlaceController extends Controller
             'slogan'               => 'required|string|max:255',
             'descripcion'          => 'required|string|min:10',
             'localizacion'         => 'required|string|min:10',
+
             'lat'                  =>'required',
+
             'lng'                  => 'required',
+
             'clima'                => 'required|string|min:10',
             'caracteristicas'      => 'required|string|min:10',
             'flora'                => 'required|string|min:10',
@@ -50,8 +53,11 @@ class TuristicPlaceController extends Controller
             'slogan.required'   => 'Debe ingresar el slogan.',
             'descripcion.required' => 'Debe ingresar la descripción.',
             'localizacion.required' => 'Debe ingresar la localización.',
+
             'lat.required'          => 'debe ubicar la latitud',
+
             'lng.required'          =>'debe ubicar la longitud',
+            
             'clima.required' => 'Debe ingresar el clima.',
             'caracteristicas.required' => 'Debe ingresar las características.',
             'flora.required' => 'Debe ingresar la flora y fauna.',
