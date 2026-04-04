@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\preferenceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\TuristicPlaceController;
 Route::get('/', function () {
     return view('welcome');
@@ -59,7 +60,11 @@ Route::put('/Editar_sitio/{id}', [TuristicPlaceController::class, 'sitioactualiz
 //visualizar sitio ecoturistico
 Route::get('/Sitio/{id}', [TuristicPlaceController::class, 'ver'])->name('sitio_ecoturistico');
 
+//publicar comentario o reseña
+Route::post('/Sitio/{id}', [ReviewsController::class, 'publicarreseña'])->name('sitio_ecoturistico');
 
+//eliminar reseña
+Route::delete('/Sitio/{id}', [ReviewsController::class, 'eliminarreseña'])->name('eliminar_reseña');
 //ver coleccion de todos los sitios 
 Route::get('/Coleccion', [TuristicPlaceController::class, 'coleccion'])
     ->name('coleccion_sitios');
