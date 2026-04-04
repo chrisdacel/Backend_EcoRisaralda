@@ -97,3 +97,9 @@ Route::get('/preferences', function () {
 
         // Gestión de sitios turísticos (todos los sitios)
             Route::get('/places', [TuristicPlaceApiController::class, 'index']);
+
+                    // ============ REVIEWS ============
+        Route::post('/places/{id}/reviews', [ReviewApiController::class, 'store']);
+        Route::put('/reviews/{id}', [ReviewApiController::class, 'update']);
+        Route::delete('/reviews/{id}', [ReviewApiController::class, 'destroy']);
+        Route::post('/reviews/{id}/react', [ReviewApiController::class, 'react']);
