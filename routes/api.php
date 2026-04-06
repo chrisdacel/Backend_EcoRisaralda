@@ -587,6 +587,11 @@ Route::middleware(['web', 'auth:sanctum'])->group(function () {
             ]);
         });
 
+        
+        
+        
+
+
         // Recomendaciones basadas en preferencias del usuario
         Route::get('/recommendations', function (Request $request) {
             $user = $request->user();
