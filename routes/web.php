@@ -68,5 +68,13 @@ Route::delete('/Sitio/{id}', [ReviewsController::class, 'eliminarreseña'])->nam
 //ver coleccion de todos los sitios 
 Route::get('/Coleccion', [TuristicPlaceController::class, 'coleccion'])
     ->name('coleccion_sitios');
+    //añadir a favoritos
+Route::post('/Sitio/{id}/favorite', [TuristicPlaceController::class, 'favoritos'])->name('agregar_favorito');
+//eliminar de favoritos
+Route::delete('/Sitio/{id}/favorite', [TuristicPlaceController::class, 'removeFavorite'])->name('eliminar_favorito');
+
+Route::get('/Sitios_favoritos',[TuristicPlaceController::class,'versitiosfavoritos'])
+    ->middleware(['auth', 'verified'])
+    ->name('sitios_favoritos');
 
 require __DIR__.'/auth.php';

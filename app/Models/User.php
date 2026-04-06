@@ -58,4 +58,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(preference::class)
             ->wherePivotNull('archived_at');
     }
+     public function favoritePlaces(){
+        return $this->belongsToMany(TuristicPlace::class, 'favorite_places', 'user_id','place_id')
+            ->wherePivotNull('archived_at')
+            ->whereNull('turistic_places.archived_at')
+            ->withTimestamps();
+    }
 }

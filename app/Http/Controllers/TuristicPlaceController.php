@@ -1,12 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TuristicPlace;
+use App\Models\reviews;
+use App\Models\rate;
+use App\Models\FavoritePlace;
+use App\Models\LabelPlace;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+
 use App\Models\User;
+
 
 
 class TuristicPlaceController extends Controller

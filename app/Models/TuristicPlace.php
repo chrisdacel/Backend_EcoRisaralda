@@ -51,6 +51,12 @@ class TuristicPlace extends Model
     {
         return $this->belongsTo(User::class);
     }
+     public function favoriteby(){
+        return $this->belongsToMany(User::class, 'favorite_places', 'place_id', 'user_id')
+            ->wherePivotNull('archived_at')
+            ->withTimestamps();
+
+    }
 
 
     }
