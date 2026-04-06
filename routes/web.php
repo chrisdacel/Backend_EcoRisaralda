@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\preferenceController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\TuristicPlaceController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\AdminFunctionController;
+
+use Illuminate\Support\Facades\Route;
+//Laravel default web routes file
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 //preferences routes
 
@@ -59,16 +63,13 @@ Route::put('/Editar_sitio/{id}', [TuristicPlaceController::class, 'sitioactualiz
 
 //visualizar sitio ecoturistico
 Route::get('/Sitio/{id}', [TuristicPlaceController::class, 'ver'])->name('sitio_ecoturistico');
-
 //publicar comentario o reseña
 Route::post('/Sitio/{id}', [ReviewsController::class, 'publicarreseña'])->name('sitio_ecoturistico');
 
 //eliminar reseña
 Route::delete('/Sitio/{id}', [ReviewsController::class, 'eliminarreseña'])->name('eliminar_reseña');
-//ver coleccion de todos los sitios 
-Route::get('/Coleccion', [TuristicPlaceController::class, 'coleccion'])
-    ->name('coleccion_sitios');
-    //añadir a favoritos
+
+//añadir a favoritos
 Route::post('/Sitio/{id}/favorite', [TuristicPlaceController::class, 'favoritos'])->name('agregar_favorito');
 //eliminar de favoritos
 Route::delete('/Sitio/{id}/favorite', [TuristicPlaceController::class, 'removeFavorite'])->name('eliminar_favorito');
@@ -76,5 +77,14 @@ Route::delete('/Sitio/{id}/favorite', [TuristicPlaceController::class, 'removeFa
 Route::get('/Sitios_favoritos',[TuristicPlaceController::class,'versitiosfavoritos'])
     ->middleware(['auth', 'verified'])
     ->name('sitios_favoritos');
+
+//ver coleccion de todos los sitios 
+Route::get('/Coleccion', [TuristicPlaceController::class, 'coleccion'])
+    ->name('coleccion_sitios');
+
+//panel de control admin
+Route::get('/panel_control', [AdminFunctionController::class, 'index'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('Modificar_sitio');
 
 require __DIR__.'/auth.php';
