@@ -103,3 +103,21 @@ Route::get('/preferences', function () {
         Route::put('/reviews/{id}', [ReviewApiController::class, 'update']);
         Route::delete('/reviews/{id}', [ReviewApiController::class, 'destroy']);
         Route::post('/reviews/{id}/react', [ReviewApiController::class, 'react']);
+
+        
+        // ============ FAVORITOS ============
+        Route::get('/favorites', function (Request $request) {
+            return $request->user()->favoritePlaces()->get();
+        });
+
+        Route::post('/places/{id}/favorite', function (Request $request, $id) {
+            $place = TuristicPlace::findOrFail($id);
+            $request->user()->favoritePlaces()->syncWithoutDetaching([$place->id]);
+
+            return response()->json(['message' => 'Agregado a favoritos']);
+        });
+
+        Route::delete('/places/{id}/favorite', function (Request $request, $id) {
+            $request->user()->favoritePlaces()->detach($id);
+            return response()->json(['message' => 'Eliminado de favoritos']);
+        });
