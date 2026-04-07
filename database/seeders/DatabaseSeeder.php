@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -16,10 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         $this->call(CountrySeeder::class);
+        $this->call(CountrySeeder::class);
         // User::factory(10)->create();
 
-       $users = [
+        // Crear o actualizar usuarios por email
+        $users = [
             [
                 'name' => 'Test User',
                 'last_name'=>'apellido',
@@ -61,11 +63,21 @@ class DatabaseSeeder extends Seeder
                 'email' => 'test4@example.com',
             ],
         ];
-         foreach ($users as $userData) {
+
+        foreach ($users as $userData) {
             User::updateOrCreate(
                 ['email' => $userData['email']],
                 $userData
             );
         }
+
+        // Crear admin explícitamente
+        $this->call(AdminSeeder::class);
+        // Ejecutar los seeders de preferencias
+        $this->call(PreferenceSeeder::class);
+        // Ejecutar los seeders de lugares turísticos
+        $this->call(TurusticPlaceSeeder::class);
+        // Ejecutar los seeders de etiquetas de lugares
+        $this->call(PlaceLabel::class);
     }
 }
