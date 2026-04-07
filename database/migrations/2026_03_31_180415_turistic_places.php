@@ -17,9 +17,12 @@ return new class extends Migration
             $table->string('slogan');
             $table->string('cover');
             $table->longText('description');
+            
             $table->longText('localization');
+            
             $table->decimal('lat', 10, 8); 
-            $table->decimal('lng', 11, 8); 
+            $table->decimal('lng', 11, 8);
+
             $table->longText('Weather');
             $table->string('Weather_img');
             $table->longText('features');
