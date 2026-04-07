@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="{{ asset('img/inicio_sesion/nature-svgrepo-com.svg') }}">
+  
+  @vite(['resources/css/app.css', 'resources/css/style_Sitio.css', 'resources/js/app.js'])
+  <link rel="stylesheet" href="{{ asset('css/style_Sitio.css') }}">
+  
+  <title>Sitios</title>
+</head>
+<body>
+    <!-- Navbar -->
+      <header class="header">
+        <!-- div que contiene el logo de la empresa con hipervinculo a la pagina principal-->
+        <div id="logotipo">
+            <!-- imagen de logo -->
+            <a href="Pagina_Inicio.html"><img src="img/Pagina_inicio/nature-svgrepo-com.svg" alt="Logo empresa" id="logo"></a>
+
+            <!-- div de texto de logo -->
+            <div>
+                <a class="header-brand" href="Pagina_Inicio.html"><h3>Conexion</h3><h5>EcoRisaralda</h5></a>
+            </div>
+            
+        </div>
+ @if($user)
+    @if($user->favoritePlaces()->where('place_id', $place->id)->exists())
+        <!-- Ya está en favoritos - Mostrar botón de eliminar -->
+        <form action="{{ route('eliminar_favorito', $place->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">
+                ❤️ Eliminar de favoritos
+            </button>
+        </form>
+    @else
+        <!-- NO está en favoritos - Mostrar botón de agregar -->
+        <form action="{{ route('agregar_favorito', $place->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+                🤍 Agregar a favoritos
+            </button>
+        </form>
+    @endif
+@endif
+        <!-- parte derecha del encabezado -->
+        <div id="parte_derecha">
+            <!-- barra de busqueda -->     
+                <div id="buscador">
+                    <img src="img/Pagina_inicio/search-svgrepo-com.svg" alt="Buscar" id="buscar">
+                    <p>Buscar</p>
+                </div>       
+                <div id="user">
+                    <img src="img/Coleccion_sitios_ecoturisticos/user.svg" alt="">
+                    <p>Jane Mar</p>
+                </div>
+                <img src="img/Coleccion_sitios_ecoturisticos/favourites.png" class="favourites" alt="">
+
+            <!-- dropdown -->
+                <img src="img/Pagina_inicio/img_drop_down.png" alt="Menu Desplegable" id="dropdown">
+        </div>
+    </header>
+
+    <!-- Barra de busqueda -->
+    <div id="search" class="search">
+        <input type="text" placeholder="Escribe tu búsqueda...">
+    </div>
+
+
+    <!-- Contenedor 1 -->
+    <section class="vista">
+        <div class="vista_contenido">
+            <h1> {{$place->name}}</h1>
+            <p> {{$place->slogan}} </p>
+            <a href="sitio.html" class="btn conocer"> Conoce más </a>
+        </div>
+    </section>
+
+
+    <!-- Contenedor 2 -->
+    <section class="descripcion">
+        <div class="descripcion_contenedor">
+            <p>
+               {{$place->description}}
+            </p>
+        </div>
+    </section>
+
+
+    <!-- Contenedor 3 -->
+    <section class="info-section">
+        <div class="container info-grid">
+            <div class="info-text">
+                <h2 class="green-title"> Localización </h2>
+                <p>
+                  {{$place->localization}}
+                </p>
+            </div>
+
+            <div class="info-img">
+                   <div id="map" class="w-80 h-80"></div>
+            </div>
+        </div>
+    </section>
+  
+
+    <!-- Contenedor 4 -->
+    <section class="info-section">
+        <div class="container info-grid reverse">
+            <div class="info-img">
+                <img src="" alt="Vegetación y clima">
+            </div>
+
+            <div class="info-text">
+                <h2 class="green-title">Clima</h2>
+                <p>
+                    Tiene un clima templado y húmedo, con temperaturas entre 17°C y 26°C. Llueve con frecuencia durante todo el año,
+                    lo que favorece su vegetación exuberante. Se recomienda llevar ropa impermeable y calzado adecuado para caminatas.
+                </p>
+            </div>
+        </div>
+    </section>
+  
+
+    <!-- Contenedor 5 -->
+    <section class="info-section">
+        <div class="container info-grid">
+            <div class="info-text">
+                <h2 class="green-title">Características</h2>
+                <p>
+                    La Reserva Natural Parque La Nona está ubicada en Marsella, Risaralda, y tiene unas 505 hectáreas de bosque andino entre los 1.700 y 2.100 m s. n. m.
+                    Es rica en biodiversidad, fuente de varias quebradas y cuenta con alojamiento, zona de camping y senderos ecológicos ideales para caminatas y avistamiento de aves.
+                </p>
+            </div>
+
+            <div class="info-img">
+                <img src="./img/sitios/unnamed.jpg" alt="Vista de montaña y reserva natural">
+            </div>
+        </div>
+    </section>
+  
+
+    <!-- Contenedor 6 -->
+    <section class="info-section">
+        <div class="container info-grid reverse">
+            <div class="info-img">
+                <img src="./img/sitios/Departamento-Risaralda-de-Colombia-10.jpg" alt="Flora y fauna del parque">
+            </div>
+
+            <div class="info-text">
+                <h2 class="green-title">Flora y Fauna</h2>
+                <p>
+                    El parque alberga una gran variedad de especies vegetales como árboles de yarumo, cedro y guadua.
+                    También es hogar de aves como tucanes, tangaras, y búhos, además de mamíferos como zarigüeyas, armadillos
+                    y pequeños felinos, lo que lo convierte en un espacio vital para la conservación de la biodiversidad.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contenedor 7 -->
+    <section class="info-section">
+        <div class="container info-grid">
+            <div class="info-text">
+                <h2 class="green-title">Infraestructura</h2>
+                <p>
+                    El parque cuenta con cabañas, zonas de camping, baños ecológicos, miradores y senderos señalizados.
+                    Estas infraestructuras están diseñadas para minimizar el impacto ambiental y ofrecer comodidad a los visitantes,
+                    fomentando una experiencia segura y respetuosa con el entorno natural.
+                </p>
+            </div>
+
+            <div class="info-img">
+                <img src="./img/sitios/maxresdefault.jpg" alt="Infraestructura del parque">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contenedor 8 -->
+    <section class="info-section">
+        <div class="container info-grid">
+            <div class="info-text">
+                <h2 class="green-title">Recomendaciones</h2>
+                <p>
+                Se sugiere llevar ropa cómoda, calzado para caminatas, impermeable, repelente, protector solar, 
+                cámara fotográfica, y agua. Es importante respetar las normas del parque, no dejar residuos y 
+                mantener una actitud responsable con el medio ambiente para preservar este tesoro natural.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <h1> Calificación promedio: {{ $rate ? $rate->rating : 'Sin calificaciones aún' }} </h1>
+        @if($user)
+        <button>
+
+        Añadir una reseña
+        </button>
+      
+
+        <form action="/Sitio/{{$place->id}}" method="POST">
+            @csrf
+            <label for="">Calificanos</label>
+            <label><input type="radio" name="rating" value="1"> 1</label>
+            <label><input type="radio" name="rating" value="2"> 2</label>
+            <label><input type="radio" name="rating" value="3"> 3</label>
+            <label><input type="radio" name="rating" value="4"> 4</label>
+            <label><input type="radio" name="rating" value="5"> 5</label>
+            <label for="review">Escribe tu reseña</label>
+            @error('rating')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+            <textarea name="review" id="review"></textarea>
+            <button>Enviar</button>
+            @error('review')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </form>
+        @else
+        <p> Inicia sesión para añadir una reseña </p>
+        @endif
+    </section>
+    <section>
+        <h2> Reseñas </h2>
+        @foreach($reviews as $review)
+            <div class="review">
+                <div>{{$review->rating}}</div>
+                <h3> {{ $review->user->name }} </h3>
+                <p> {{ $review->comment }} </p>
+                <span> {{ $review->created_at->format('d M Y H:i') }} </span>
+            </div>
+            @if($user && $user->id === $review->user_id)
+            <form action="{{ route('eliminar_reseña', $review->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Eliminar reseña</button>
+            </form>
+            @endif
+        @endforeach
+        
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+        <!-- contenedor de footer -->
+        <div class="footer-container">
+            <!-- primera columna del footer -->
+          <div class="footer-col">
+            <!-- titulo -->
+            <h2>Conexion</h2>
+            <p>EcoRisaralda</p>
+            <!-- iconos importados -->
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <!-- selector de lenguaje -->
+            <div class="language-selector">
+              🌐
+              <!-- seleccion -->
+              <select>
+                <option>Español</option>
+                <option>English</option>
+              </select>
+            </div>
+          </div>
+          <!-- columna del footer -->
+          <div class="footer-col">
+            <h4>Información</h4>
+            <!-- lista desordenad -->
+            <ul>
+                <!-- elementos de la lista -->
+              <li><a href="#">Conexión EcoRisaralda</a></li>
+              <li><a href="#">Descripcion</a></li>
+              <li><a href="#">Lema</a></li>
+            </ul>
+          </div>
+          <!-- columna footer -->
+          <div class="footer-col">
+            <h4>Navegación rápida</h4>
+            <!-- lista desordenada -->
+            <ul>
+                <!-- elementos -->
+                <li><a href="Pagina_Inicio.html">Inicio</a></li>
+                <li><a href="sobre_nosotros.html">Sobre nosotros</a></li>
+                <li><a href="privacidad.html">Políticas</a></li>
+            </ul>
+          </div>
+          <!-- columna footer -->
+          <div class="footer-col">
+            <h4>Contacto y soporte</h4>
+            <!-- lista desordenada -->
+            <ul>
+                <!-- elementos -->
+              <li><a href="mailto:ecorisaralda@contacto.com">ecorisaralda@contacto.com</a></li>
+              <li><a href="#">300 445 80055</a></li>
+              <li><a href="#">Preguntas</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- derechos reservados -->
+        <div class="footer-bottom">
+          <p><em>Conectando viajeros con la naturaleza. Explora, guarda y comparte experiencias únicas.</em></p>
+          <p>© 2025 Conexión EcoRisaralda – Todos los derechos reservados.</p>
+        </div>
+      </footer>
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar que las funciones estén disponibles
+            if (typeof window.showPlaceMap === 'function') {
+                window.showPlaceMap(
+                    {{ $place->lat }}, 
+                    {{ $place->lng }}, 
+                    '{{ $place->name }}'
+                );
+            } else {
+                console.error('showPlaceMap no está definida');
+            }
+        });
+    </script>
+</body>
+</html>
