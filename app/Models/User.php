@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +20,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
+        'country_id',
+        'date_of_birth',
         'password',
+        'image',
+        'role',
+        'status',
+        'first_time_preferences'
     ];
 
     /**
@@ -46,4 +53,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function preferences()
+    {
+        return $this->belongsToMany(preference::class)
+            ->wherePivotNull('archived_at');
+    }
+    public function favoritePlaces(){
+        return $this->belongsToMany(TuristicPlace::class, 'favorite_places', 'user_id','place_id')
+            ->wherePivotNull('archived_at')
+            ->whereNull('turistic_places.archived_at')
+            ->withTimestamps();
+    }
+
 }
